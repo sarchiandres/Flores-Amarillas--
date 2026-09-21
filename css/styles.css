@@ -828,10 +828,10 @@ button { font: inherit; color: inherit; }
   transform: translateY(14px);
   filter: blur(4px);
   transition:
-    opacity 1.05s ease,
-    transform 1.05s cubic-bezier(.2, .8, .2, 1),
-    filter 1.05s ease,
-    visibility 0s linear 1.05s;
+    opacity .8s ease,
+    transform .8s cubic-bezier(.2, .8, .2, 1),
+    filter .8s ease,
+    visibility 0s linear .8s;
 }
 .reveal.is-visible {
   opacity: 1;
@@ -948,73 +948,7 @@ button { font: inherit; color: inherit; }
 .btn[disabled] { opacity: .6; pointer-events: none; }
 
 /* ==========================================================================
-   12. MÚSICA
-   ========================================================================== */
-.music-btn {
-  position: fixed;
-  z-index: 40;
-  top: calc(env(safe-area-inset-top, 0px) + 12px);
-  right: calc(env(safe-area-inset-right, 0px) + 12px);
-  width: 46px;
-  height: 46px;
-  display: grid;
-  place-items: center;
-  padding: 0;
-  border-radius: 50%;
-  border: 1px solid rgba(109, 76, 65, .28);
-  background: rgba(255, 255, 255, .5);
-  -webkit-backdrop-filter: blur(6px);
-          backdrop-filter: blur(6px);
-  font-size: 1.15rem;
-  line-height: 1;
-  cursor: pointer;
-  transition: background-color .3s ease, box-shadow .3s ease, transform .25s ease;
-}
-.music-btn:hover { transform: scale(1.06); }
-.music-btn::after { /* raya diagonal = música apagada */
-  content: "";
-  position: absolute;
-  width: 58%;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--disc-2);
-  transform: rotate(-45deg);
-  transition: opacity .25s ease;
-}
-.music-btn.is-on {
-  background: linear-gradient(135deg, #FFE27A, var(--petal-2));
-  box-shadow: 0 0 0 4px rgba(255, 193, 7, .2), 0 4px 14px rgba(249, 168, 37, .4);
-}
-.music-btn.is-on::after { opacity: 0; }
-
-.toast {
-  position: fixed;
-  z-index: 60;
-  left: 50%;
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
-  max-width: min(90vw, 22rem);
-  margin: 0;
-  padding: .65rem 1.1rem;
-  border-radius: 999px;
-  background: rgba(62, 39, 35, .92);
-  color: #FFF8E7;
-  font-size: .82rem;
-  font-weight: 400;
-  text-align: center;
-  opacity: 0;
-  visibility: hidden;
-  transform: translate(-50%, 10px);
-  transition: opacity .35s ease, transform .35s ease, visibility 0s linear .35s;
-}
-.toast.is-visible {
-  opacity: 1;
-  visibility: visible;
-  transform: translate(-50%, 0);
-  transition-delay: 0s;
-}
-
-/* ==========================================================================
-   13. MODAL (tarjeta)
+   12. MODAL (tarjeta)
    ========================================================================== */
 .modal {
   position: fixed;
@@ -1117,7 +1051,7 @@ button { font: inherit; color: inherit; }
 }
 
 /* ==========================================================================
-   14. RESPONSIVE
+   13. RESPONSIVE
    ========================================================================== */
 
 /* Teléfonos pequeños */
@@ -1166,7 +1100,7 @@ button { font: inherit; color: inherit; }
 }
 
 /* ==========================================================================
-   15. ACCESIBILIDAD: MOVIMIENTO REDUCIDO
+   14. ACCESIBILIDAD: MOVIMIENTO REDUCIDO
    Se conservan solo fundidos suaves; se eliminan giros, balanceos y partículas.
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {

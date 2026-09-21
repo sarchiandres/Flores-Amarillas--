@@ -11,8 +11,7 @@
    6. Secuencia de la experiencia
    7. Reinicio
    8. Modal
-   9. Música
-   10. Inicio
+   9. Inicio
    ========================================================================== */
 
 
@@ -23,10 +22,6 @@
 /** Cantidad de flores del ramo. (El diseño manual está pensado para 10;
  *  con menos flores se usan las primeras, con más se generan flores extra.) */
 const TOTAL_FLOWERS = 10;
-
-/** Ruta del archivo de música (opcional). Ver README.md */
-const MUSIC_SRC = 'assets/music.mp3';
-const MUSIC_VOLUME = 0.5; // 0 a 1
 
 /** Tiempos en milisegundos. Sube los números para ir más lento, bájalos para ir más rápido. */
 const TIMING = {
@@ -41,7 +36,7 @@ const TIMING = {
   headDelay: 560,        // cuándo empieza a abrirse la flor (contado desde que empieza su tallo)
   headGrow: 950,         // cuánto tarda en abrirse la flor
 
-  finaleGap: 600,        // pausa entre la décima flor y el primer texto
+  finaleGap: 250,        // pausa entre la décima flor y el primer texto
   replayShowIntro: false // ¿mostrar de nuevo la frase inicial al pulsar "Volver a ver florecer"?
 };
 
@@ -137,10 +132,7 @@ const dom = {
   modalCard: $('#modal .modal-card'),
   modalX: $('#modal-x'),
   modalClose: $('#modal-close'),
-  modalFlower: $('#modal-flower'),
-  musicBtn: $('#music-btn'),
-  audio: $('#bg-music'),
-  toast: $('#toast')
+  modalFlower: $('#modal-flower')
 };
 
 
@@ -563,63 +555,7 @@ function trapFocus(event) {
 
 
 /* ==========================================================================
-   9. MÚSICA
-   El navegador no permite reproducir sola, así que solo suena al pulsar 🎵.
-   Si el archivo no existe, la página sigue funcionando y se avisa con un mensaje breve.
-   ========================================================================== */
-let musicOn = false;
-let fadeTimer = null;
-let toastTimer = null;
-
-function showToast(message) {
-  dom.toast.textContent = message;
-  dom.toast.classList.add('is-visible');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => dom.toast.classList.remove('is-visible'), 3200);
-}
-
-function setMusicUI(on) {
-  musicOn = on;
-  dom.musicBtn.classList.toggle('is-on', on);
-  dom.musicBtn.setAttribute('aria-pressed', String(on));
-  dom.musicBtn.setAttribute('aria-label', on ? 'Silenciar música' : 'Activar música');
-}
-
-function fadeVolume(target, done) {
-  clearInterval(fadeTimer);
-  fadeTimer = setInterval(() => {
-    const diff = target - dom.audio.volume;
-    if (Math.abs(diff) < 0.03) {
-      dom.audio.volume = target;
-      clearInterval(fadeTimer);
-      if (done) done();
-    } else {
-      dom.audio.volume = Math.min(1, Math.max(0, dom.audio.volume + Math.sign(diff) * 0.03));
-    }
-  }, 60);
-}
-
-async function toggleMusic() {
-  if (!musicOn) {
-    try {
-      dom.audio.volume = 0;
-      await dom.audio.play();
-      setMusicUI(true);
-      fadeVolume(MUSIC_VOLUME);
-    } catch (error) {
-      setMusicUI(false);
-      console.info(`[música] No se pudo reproducir "${MUSIC_SRC}". ¿Ya agregaste el archivo? (ver README.md)`);
-      showToast('La música no está disponible por ahora.');
-    }
-  } else {
-    setMusicUI(false);
-    fadeVolume(0, () => dom.audio.pause());
-  }
-}
-
-
-/* ==========================================================================
-   10. INICIO
+   9. INICIO
    ========================================================================== */
 function applyTextTemplates() {
   const word = TOTAL_FLOWERS <= 20 ? NUMBER_WORDS[TOTAL_FLOWERS] : String(TOTAL_FLOWERS);
@@ -649,7 +585,6 @@ function init() {
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   window.scrollTo(0, 0);
 
-  dom.audio.setAttribute('src', MUSIC_SRC);
   applyTimingVariables();
   applyTextTemplates();
   buildAmbient();
@@ -686,10 +621,6 @@ function init() {
     if (event.target instanceof HTMLElement && event.target.dataset.close) closeModal();
   });
   document.addEventListener('keydown', trapFocus);
-  dom.musicBtn.addEventListener('click', toggleMusic);
-  dom.audio.addEventListener('error', () => {
-    if (musicOn) { setMusicUI(false); showToast('La música no está disponible por ahora.'); }
-  });
 
   runExperience({ withIntro: true });
 }
