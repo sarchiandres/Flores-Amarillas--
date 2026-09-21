@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#FFF3C4" />
+    <title>Para ti · 21 de septiembre</title>
+    <meta
+      name="description"
+      content="Un pequeño detalle digital para el 21 de septiembre."
+    />
+    <meta property="og:title" content="Para ti · 21 de septiembre" />
+    <meta
+      property="og:description"
+      content="Hay detalles que llegan en el momento indicado..."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <!-- ============ FONDO (atardecer suave, solo decorativo) ============ -->
+    <div class="bg" aria-hidden="true">
+      <div class="bg-sun"></div>
+      <div class="bg-hills"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <!-- Partículas, pétalos, hojas y estrellas discretas (las crea script.js) -->
+    <div class="ambient" id="ambient" aria-hidden="true"></div>
+
+    <!-- Pétalos que caen en la celebración (los crea script.js) -->
+    <div class="fx-layer" id="fx-layer" aria-hidden="true"></div>
+
+    <!-- ============ BOTÓN DE MÚSICA ============ -->
+    <!-- El archivo va en: assets/music.mp3 (ver README.md). No suena solo: hay que pulsar el botón. -->
+    <button
+      class="music-btn"
+      id="music-btn"
+      type="button"
+      aria-label="Activar música"
+      aria-pressed="false"
+      title="Música"
+    >
+      <span aria-hidden="true">🎵</span>
+    </button>
+    <audio id="bg-music" src="assets/music.mp3" loop preload="none"></audio>
+    <p class="toast" id="toast" role="status" aria-live="polite"></p>
+
+    <!-- ============ FRASE INICIAL ============ -->
+    <p class="intro" id="intro">
+      <span class="intro-text"
+        >Hay formas bastante curiosas de dar un detalle...</span
+      >
+    </p>
+
+    <!-- ============ EXPERIENCIA PRINCIPAL ============ -->
+    <main class="experience" id="experience">
+      <!-- El ramo. Las flores se generan con script.js (TOTAL_FLOWERS) -->
+      <div class="bouquet-stage" id="bouquet-stage">
+        <div
+          class="bouquet"
+          id="bouquet"
+          role="img"
+          aria-label="Un ramo de flores amarillas"
+        >
+          <div class="halo" aria-hidden="true"></div>
+          <div class="glow" aria-hidden="true"></div>
+          <div class="ground-shadow" aria-hidden="true"></div>
+
+          <!-- Base del ramo: tallos que se juntan bajo el lazo -->
+          <svg
+            class="bundle"
+            id="bundle"
+            viewBox="0 0 100 122"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <g class="bundle-stems">
+              <path d="M50 100 Q49.5 108 44 119" pathLength="1" />
+              <path d="M50 100 Q49.7 109 47 120" pathLength="1" />
+              <path d="M50 100 Q50 110 50 121" pathLength="1" />
+              <path d="M50 100 Q50.3 109 53 120" pathLength="1" />
+              <path d="M50 100 Q50.5 108 56 119" pathLength="1" />
+            </g>
+          </svg>
+
+          <div class="flowers" id="flowers" aria-hidden="true"></div>
+
+          <!-- Lazo -->
+          <div class="ribbon" id="ribbon" aria-hidden="true">
+            <span class="ribbon-tail ribbon-tail-l"></span>
+            <span class="ribbon-tail ribbon-tail-r"></span>
+            <span class="ribbon-loop ribbon-loop-l"></span>
+            <span class="ribbon-loop ribbon-loop-r"></span>
+            <span class="ribbon-knot"></span>
+          </div>
+
+          <!-- Chispas doradas de la celebración -->
+          <div class="sparks" id="sparks" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <!-- ============ MENSAJE FINAL ============
+         Cada elemento con la clase "reveal" aparece uno tras otro.
+         data-delay = milisegundos de espera antes de mostrarlo.
+         Puedes cambiar los textos libremente. -->
+      <section class="finale" id="finale">
+        <span class="rule reveal" data-delay="0" aria-hidden="true"></span>
+
+        <h1 class="finale-title reveal" data-delay="0">
+          Feliz 21 de septiembre&nbsp;💛
+        </h1>
+
+        <p class="finale-story reveal" data-delay="1100">
+          Dicen que el 21 de septiembre se regalan flores amarillas como símbolo
+          de cariño, alegría y de querer compartir momentos especiales con
+          alguien. Así que pensé que hoy era un buen día para regalarte estas...
+        </p>
+
+        <!-- [[COUNT]] se reemplaza por el número de flores (TOTAL_FLOWERS) escrito con letras -->
+        <p class="finale-quote reveal" data-delay="2200">
+          Porque hay personas que hacen que un día cualquiera se sienta un
+          poquito más especial.
+        </p>
+
+        <p class="finale-line finale-line-1 reveal" data-delay="2200">
+          Espero que estas flores te saquen una sonrisa.
+        </p>
+
+        <p class="finale-line finale-line-2 reveal" data-delay="1600">
+          
+          Como buen programador, tenía que encontrar una forma diferente de regalarte flores.
+        </p>
+
+        <div class="actions reveal" data-delay="1300">
+          <button
+            class="btn btn-primary"
+            id="replay-btn"
+            type="button"
+            aria-label="Volver a ver florecer el ramo"
+          >
+            Volver a ver florecer 🌻
+          </button>
+          <button
+            class="btn btn-ghost"
+            id="card-btn"
+            type="button"
+            aria-label="Abrir una tarjeta con un mensaje adicional"
+            aria-haspopup="dialog"
+          >
+            Un detalle para ti 💛
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ TARJETA (MODAL) ============ -->
+    <div class="modal" id="modal" hidden>
+      <div class="modal-backdrop" data-close="true"></div>
+      <div
+        class="modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+        tabindex="-1"
+      >
+        <button
+          class="modal-x"
+          id="modal-x"
+          type="button"
+          aria-label="Cerrar la tarjeta"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="modal-flower" id="modal-flower" aria-hidden="true"></div>
+        <h2 class="modal-title" id="modal-title">Un detalle para ti</h2>
+        <p>
+          No hace falta una gran razón para regalar flores, pero el 21 de
+          septiembre me pareció la excusa perfecta.
+        </p>
+        <p>
+          Quería que, aunque fuera por un ratito, hoy te llegara algo bonito.
+        </p>
+        <p class="modal-highlight">
+          Y que recuerdes que alguien pensó en ti hoy.
+        </p>
+        <p class="modal-sign">Con cariño</p>
+        <button
+          class="btn btn-primary btn-small"
+          id="modal-close"
+          type="button"
+          aria-label="Cerrar la tarjeta"
+        >
+          Cerrar
+        </button>
+      </div>
+    </div>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>

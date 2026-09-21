@@ -1,0 +1,4 @@
+Coloca aquí tu canción con el nombre exacto:  music.mp3
+
+La música solo se reproduce cuando se pulsa el botón 🎵 (los navegadores no permiten el autoplay).
+Si el archivo no existe, la página funciona igual.
